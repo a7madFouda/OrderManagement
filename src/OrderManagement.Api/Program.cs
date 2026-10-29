@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using OrderManagement.Application;
 using OrderManagement.Infrastructure;
+using OrderManagement.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,8 @@ app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {
+    await app.Services.ApplyMigrationsAsync();
+
     app.MapOpenApi();
     app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "Order Management API"));
 }
