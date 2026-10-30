@@ -1,0 +1,33 @@
+@page "{id:int}"
+@model OrderManagement.Web.Pages.Orders.EditModel
+@{
+    ViewData["Title"] = $"Edit order #{Model.Order.Id}";
+}
+
+<h1 class="h3 mb-3">Edit order #@Model.Order.Id</h1>
+
+<div id="form-errors" class="alert alert-danger d-none" role="alert"></div>
+
+<form id="order-form" method="post" novalidate>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <label for="customer" class="form-label">Customer</label>
+            <input id="customer" class="form-control" value="@Model.Order.Customer.Name (@Model.Order.Customer.Email)" disabled />
+        </div>
+    </div>
+
+    <partial name="_OrderFormFields" />
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <a asp-page="Index" class="btn btn-link">Cancel</a>
+    </div>
+</form>
+
+<script type="application/json" id="order-data">
+    @Json.Serialize(new { Model.Order.DiscountType, Model.Order.DiscountValue, Model.Order.Items })
+</script>
+
+@section Scripts {
+    <script type="module" src="~/js/pages/order-form.js" asp-append-version="true"></script>
+}

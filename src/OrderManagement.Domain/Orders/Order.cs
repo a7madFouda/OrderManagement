@@ -68,8 +68,8 @@ public sealed class Order : AggregateRoot
     private void ApplyDiscount(IDiscountStrategy discountStrategy, decimal discountValue)
     {
         DiscountType = discountStrategy.Type;
-        DiscountValue = discountValue;
-        DiscountAmount = discountStrategy.CalculateDiscount(SubTotal, discountValue);
+        DiscountValue = Math.Round(discountValue, 2, MidpointRounding.AwayFromZero);
+        DiscountAmount = discountStrategy.CalculateDiscount(SubTotal, DiscountValue);
         Total = SubTotal - DiscountAmount;
     }
 }

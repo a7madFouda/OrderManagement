@@ -449,6 +449,7 @@ Icon
 # Claude Code
 .claude/
 CLAUDE.md
+.playwright-mcp/
 
 # Directories potentially created on remote AFP share
 .AppleDB

@@ -1,0 +1,36 @@
+@page
+@model OrderManagement.Web.Pages.Orders.CreateModel
+@{
+    ViewData["Title"] = "New order";
+}
+
+<h1 class="h3 mb-3">New order</h1>
+
+<div id="form-errors" class="alert alert-danger d-none" role="alert"></div>
+
+<form id="order-form" method="post" novalidate>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <label for="customerId" class="form-label">Customer</label>
+            <select id="customerId" name="customerId" class="form-select" required>
+                <option value="">Select a customer...</option>
+                @foreach (var customer in Model.Customers)
+                {
+                    <option value="@customer.Id">@customer.Name (@customer.Email)</option>
+                }
+            </select>
+            <div class="invalid-feedback">Please select a customer.</div>
+        </div>
+    </div>
+
+    <partial name="_OrderFormFields" />
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Create order</button>
+        <a asp-page="Index" class="btn btn-link">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script type="module" src="~/js/pages/order-form.js" asp-append-version="true"></script>
+}

@@ -10,7 +10,7 @@ public sealed class OrderItem : Entity
     {
         ProductName = productName.Trim();
         Quantity = quantity;
-        UnitPrice = unitPrice;
+        UnitPrice = Math.Round(unitPrice, 2, MidpointRounding.AwayFromZero);
     }
 
     public string ProductName { get; private set; }

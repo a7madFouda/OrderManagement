@@ -1,0 +1,73 @@
+@page
+@model OrderManagement.Web.Pages.Orders.IndexModel
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Orders</h1>
+    <a class="btn btn-primary" asp-page="Create">New order</a>
+</div>
+
+<div id="page-alert">
+    @if (Model.StatusMessage is not null)
+    {
+        <div class="alert alert-success">@Model.StatusMessage</div>
+    }
+</div>
+
+<form id="order-filters" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input type="search" name="search" class="form-control" placeholder="Search by product..." autocomplete="off"
+               aria-label="Search by product" />
+    </div>
+    <div class="col-md-3">
+        <select name="customerId" class="form-select" aria-label="Filter by customer">
+            <option value="">All customers</option>
+            @foreach (var customer in Model.Customers)
+            {
+                <option value="@customer.Id">@customer.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select name="sortBy" class="form-select" aria-label="Sort by">
+            <option value="Date">Sort by date</option>
+            <option value="Total">Sort by total</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="sortDescending" class="form-select" aria-label="Sort direction">
+            <option value="true">Descending</option>
+            <option value="false">Ascending</option>
+        </select>
+    </div>
+</form>
+
+<div id="orders-table">
+    <partial name="_OrdersTable" model="Model.Orders" />
+</div>
+
+<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-modal-title">Delete order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete order #<span id="delete-order-id"></span>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+
+@section Scripts {
+    <script type="module" src="~/js/pages/orders-index.js" asp-append-version="true"></script>
+}
