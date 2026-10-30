@@ -8,7 +8,7 @@ public sealed class OrderItem : Entity
 
     internal OrderItem(string productName, int quantity, decimal unitPrice)
     {
-        ProductName = productName;
+        ProductName = productName.Trim();
         Quantity = quantity;
         UnitPrice = unitPrice;
     }

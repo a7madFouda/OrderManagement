@@ -18,7 +18,6 @@ internal sealed class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 
         builder.HasIndex(customer => customer.Email).IsUnique();
 
-        // Seed data needs a fixed date, otherwise every new migration would detect a change.
         var seededAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         builder.HasData(

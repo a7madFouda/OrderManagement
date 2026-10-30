@@ -1,3 +1,58 @@
 @HostAddress = https://localhost:7001
 
-###
+### Create an order with two items (15% discount)
+POST {{HostAddress}}/api/orders
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "discountType": "Percentage",
+  "discountValue": 15,
+  "items": [
+    { "productName": "Laptop", "quantity": 1, "unitPrice": 1200 },
+    { "productName": "Mouse", "quantity": 2, "unitPrice": 25.50 }
+  ]
+}
+
+### Create an invalid order (returns every broken rule)
+POST {{HostAddress}}/api/orders
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "discountType": "Percentage",
+  "discountValue": 150,
+  "items": [
+    { "productName": "", "quantity": 0, "unitPrice": -1 },
+    { "productName": "Keyboard", "quantity": 1, "unitPrice": 40 },
+    { "productName": "keyboard", "quantity": 1, "unitPrice": 40 }
+  ]
+}
+
+### List orders (filter by product and customer, sort by total, page)
+GET {{HostAddress}}/api/orders?search=lap&customerId=1&sortBy=Total&sortDescending=true&page=1&pageSize=10
+
+### Get an order
+GET {{HostAddress}}/api/orders/1
+
+### Update an order (replaces its items and recalculates totals; the customer can't change)
+PUT {{HostAddress}}/api/orders/1
+Content-Type: application/json
+
+{
+  "discountType": "FixedAmount",
+  "discountValue": 30,
+  "items": [
+    { "productName": "Monitor", "quantity": 2, "unitPrice": 300 },
+    { "productName": "HDMI Cable", "quantity": 3, "unitPrice": 10 }
+  ]
+}
+
+### Delete an order (soft delete)
+DELETE {{HostAddress}}/api/orders/1
+
+### Preview a discount
+GET {{HostAddress}}/api/orders/discount-preview?discountType=Percentage&discountValue=15&subTotal=200
+
+### List customers
+GET {{HostAddress}}/api/customers

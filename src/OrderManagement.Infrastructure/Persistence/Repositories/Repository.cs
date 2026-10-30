@@ -25,6 +25,4 @@ internal sealed class Repository<T>(OrderManagementDbContext context) : IReposit
     }
 
     public void Add(T aggregate) => _aggregates.Add(aggregate);
-
-    public void Remove(T aggregate) => _aggregates.Remove(aggregate);
 }

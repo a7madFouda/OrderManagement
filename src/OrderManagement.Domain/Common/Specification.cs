@@ -2,9 +2,6 @@ using System.Linq.Expressions;
 
 namespace OrderManagement.Domain.Common;
 
-/// <summary>
-/// Encapsulates the filtering, sorting and paging of an aggregate query.
-/// </summary>
 public abstract class Specification<T> where T : AggregateRoot
 {
     public Expression<Func<T, bool>>? Criteria { get; private set; }

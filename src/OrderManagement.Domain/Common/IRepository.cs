@@ -9,6 +9,4 @@ public interface IRepository<T> where T : AggregateRoot
     Task<int> CountAsync(Specification<T> specification, CancellationToken cancellationToken = default);
 
     void Add(T aggregate);
-
-    void Remove(T aggregate);
 }

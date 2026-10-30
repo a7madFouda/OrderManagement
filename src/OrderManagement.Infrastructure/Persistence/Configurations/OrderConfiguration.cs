@@ -13,18 +13,19 @@ internal sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
 
         builder.HasKey(order => order.Id);
 
+        builder.HasQueryFilter(order => !order.IsDeleted);
+
         builder.Property(order => order.DiscountType).HasConversion<string>().HasMaxLength(20);
+        builder.Property(order => order.DiscountValue).HasPrecision(18, 2);
         builder.Property(order => order.SubTotal).HasPrecision(18, 2);
         builder.Property(order => order.DiscountAmount).HasPrecision(18, 2);
         builder.Property(order => order.Total).HasPrecision(18, 2);
 
-        // Customer is a separate aggregate, so it is referenced by id only (no navigation property).
         builder.HasOne<Customer>()
             .WithMany()
             .HasForeignKey(order => order.CustomerId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Items are owned by the order: always loaded, saved and deleted together with it.
         builder.OwnsMany(order => order.Items, items =>
         {
             items.ToTable("OrderItems");

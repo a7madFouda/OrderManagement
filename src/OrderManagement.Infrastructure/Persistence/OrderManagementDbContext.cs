@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OrderManagement.Domain.Customers;
 using OrderManagement.Domain.Orders;
+using OrderManagement.Infrastructure.Persistence.Converters;
 
 namespace OrderManagement.Infrastructure.Persistence;
 
@@ -13,5 +14,11 @@ public sealed class OrderManagementDbContext(DbContextOptions<OrderManagementDbC
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrderManagementDbContext).Assembly);
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<DateTime>().HaveConversion<UtcDateTimeConverter>();
+        configurationBuilder.Properties<DateTime?>().HaveConversion<UtcDateTimeConverter>();
     }
 }
