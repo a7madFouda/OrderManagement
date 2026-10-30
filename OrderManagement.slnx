@@ -6,4 +6,8 @@
     <Project Path="src/OrderManagement.Infrastructure/OrderManagement.Infrastructure.csproj" />
     <Project Path="src/OrderManagement.Web/OrderManagement.Web.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/OrderManagement.Application.UnitTests/OrderManagement.Application.UnitTests.csproj" />
+    <Project Path="tests/OrderManagement.Domain.UnitTests/OrderManagement.Domain.UnitTests.csproj" />
+  </Folder>
 </Solution>

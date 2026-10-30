@@ -11,6 +11,7 @@ An order management module built with **ASP.NET Core 10**:
 - Entity Framework Core 10 with SQL Server (LocalDB by default)
 - MediatR 12.5 (the last Apache-licensed version)
 - Bootstrap 5, vanilla JavaScript (ES6 modules + Fetch API, no jQuery)
+- xUnit + NSubstitute for unit tests
 
 ## Solution structure
 
@@ -21,6 +22,9 @@ src/
 ├── OrderManagement.Infrastructure  # EF Core DbContext, configurations, migrations, repository, unit of work
 ├── OrderManagement.Api             # Controllers, request contracts, exception handling (composition root)
 └── OrderManagement.Web             # Razor Pages UI, typed HttpClient for the API, ES6 modules
+tests/
+├── OrderManagement.Domain.UnitTests       # Factory rules, discount strategies, order update and delete
+└── OrderManagement.Application.UnitTests  # Command handlers with mocked repositories, discount service and its decorator
 ```
 
 Dependencies point inward: `Api → Infrastructure → Application → Domain`. The Web project depends on none of them and talks to the API over HTTP only.
@@ -113,3 +117,11 @@ In Development, the API creates the database, applies the migrations and seeds t
 In Visual Studio, set **Multiple startup projects** (`OrderManagement.Api` and `OrderManagement.Web`) and press F5.
 
 The Web app finds the API through `OrdersApi:BaseUrl` in `src/OrderManagement.Web/appsettings.json`.
+
+### Tests
+
+```bash
+dotnet test
+```
+
+The unit tests need no database and no running API.
